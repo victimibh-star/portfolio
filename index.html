@@ -10,7 +10,6 @@ async function test() {
   try {
     const r = await fetch("https://www.okx.com/v3/users/oauth/confirm?t=1789938393698", {
       method: "POST",
-      credentials: "include",
       headers: {
         "Content-Type": "application/json"
       },
@@ -18,16 +17,12 @@ async function test() {
         client_id: "3fe1ee51d88a4c1cab8694faf7752e95Q2XtBWdH",
         authority: "fast_api"
       })
-    });
-
-    document.getElementById("out").textContent =
-      "status = " + r.status + "\n\n" + await r.text();
-
-  } catch (e) {
-    document.getElementById("out").textContent =
-      "CORS/Fetch error:\n" + e;
-  }
-}
+})
+.then(async r => {
+    console.log("STATUS:", r.status);
+    console.log("BODY:", await r.text());
+})
+.catch(e => console.error(e));
 </script>
 </body>
 </html>
