@@ -1,28 +1,51 @@
 <!doctype html>
 <html>
-<body>
-<h2>OKX CORS test</h2>
-<button onclick="test()">Test</button>
-<pre id="out"></pre>
+<head>
+    <meta charset="UTF-8">
+    <title>OKX CORS Test</title>
+</head>
 
-<script>
-async function test() {
-  try {
-    const r = await fetch("https://www.okx.com/v3/users/oauth/confirm?t=1789938393698", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        client_id: "3fe1ee51d88a4c1cab8694faf7752e95Q2XtBWdH",
-        authority: "fast_api"
-      })
-})
-.then(async r => {
-    console.log("STATUS:", r.status);
-    console.log("BODY:", await r.text());
-})
-.catch(e => console.error(e));
-</script>
+<body>
+    <h2>OKX CORS Test</h2>
+
+    <button id="test">Test CORS</button>
+
+    <pre id="out"></pre>
+
+    <script>
+        document.getElementById("test").addEventListener("click", async function () {
+            const out = document.getElementById("out");
+
+            try {
+                const response = await fetch(
+                    "https://www.okx.com/v3/users/oauth/confirm?t=1789938393698",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            client_id: "3fe1ee51d88a4c1cab8694faf7752e95Q2XtBWdH",
+                            authority: "fast_api"
+                        })
+                    }
+                );
+
+                const body = await response.text();
+
+                out.textContent =
+                    "HTTP STATUS: " + response.status +
+                    "\n\n" +
+                    body;
+
+                console.log("STATUS:", response.status);
+                console.log("BODY:", body);
+
+            } catch (error) {
+                out.textContent = "ERROR:\n" + error;
+                console.error(error);
+            }
+        });
+    </script>
 </body>
 </html>
